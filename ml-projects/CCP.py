@@ -6,6 +6,8 @@ from xgboost import XGBClassifier
 from sklearn.metrics import f1_score, roc_auc_score
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.pipeline import make_pipeline
+import matplotlib.pyplot as plt
+import seaborn as sns 
 
 df = pd.read_csv("churn.csv")
 df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
@@ -30,3 +32,9 @@ for name, model in [
     preds = model.predict(X_test)
     probs = model.predict_proba(X_test)[:, 1]
     print(f"{name} -> F1: {f1_score(y_test, preds):.2f}, AUC: {roc_auc_score(y_test, probs):.2f}")
+    
+#graphs      
+plt.figure(figsize=(10, 6))
+sns.countplot(x="Churn", data=df)
+plt.title("Distribution of Churn")
+plt.show()
