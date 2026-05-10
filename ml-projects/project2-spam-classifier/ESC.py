@@ -74,5 +74,5 @@ for name, model in [("Naive Bayes", MultinomialNB()),
     axes[1].set_ylabel("Score")# Set the y-axis label of the second subplot to "Score" to indicate that the vertical axis represents the values of precision, recall, and F1-score for both classes.
     axes[1].legend()# Add a legend to the second subplot to differentiate between the bars representing the Ham class and the Spam class metrics, allowing for easier interpretation of the bar chart.
 
-    plt.tight_layout()# Adjust the layout of the figure to ensure that the subplots and their titles, labels, and legends do not overlap, providing a clear and organized visualization of the model's performance metrics.
+    plt.tight_layout()# Adjust the layout of the figure to ensure that the subplots and their titles, labels, and legends do not overlap, providing a clear and organized visualization of the model's performance metrics.ii
     plt.show()# Display the figure with the confusion matrix and class metrics for each model, allowing for a visual comparison of the performance of the Naive Bayes, Logistic Regression, and SVM models in classifying the text messages as Ham or Spam.  
