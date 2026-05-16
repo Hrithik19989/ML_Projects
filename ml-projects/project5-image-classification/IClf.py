@@ -5,19 +5,24 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 import matplotlib.pyplot as plt
 
-# Data
+# Load the data & train the data 
 X, y = load_digits(return_X_y=True)
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
-
+# Models for pattern from train / test data 
+# Models are Logistic Regression and Random Forest 
 models = [
     ("Logistic Regression", LogisticRegression(max_iter=1000, n_jobs=None)),
     ("Random Forest", RandomForestClassifier(random_state=42)),
 ]
 
+# Empty list for storing  accuracy results for the models mentioned above 
 accuracies = []
 
+# Loop for models train test data fitting  , appending accuracy in the empty list above 
+#print accuracy an classification report  
+ 
 for name, model in models:
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
