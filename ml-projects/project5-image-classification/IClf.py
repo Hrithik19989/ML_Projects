@@ -1,10 +1,9 @@
-from sklearn.datasets import load_digits
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, classification_report
-import matplotlib.pyplot as plt
-
+from sklearn.datasets import load_digits # load-digits dataset
+from sklearn.model_selection import train_test_split #train test split module
+from sklearn.linear_model import LogisticRegression #Logistic Regression
+from sklearn.ensemble import RandomForestClassifier #Random Forest Classifier
+from sklearn.metrics import accuracy_score, classification_report # accuracy score and classifcation report
+import matplotlib.pyplot as plt #matplotlib
 # Load the data & train the data 
 X, y = load_digits(return_X_y=True)
 X_train, X_test, y_train, y_test = train_test_split(
