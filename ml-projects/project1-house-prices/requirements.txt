@@ -1,0 +1,8 @@
+# requirements.txt
+fastapi==0.136.3
+uvicorn==0.46.0
+pydantic==2.13.3
+scikit-learn==1.8.0
+pandas==3.0.2
+joblib==1.5.3
+numpy==2.2.6
