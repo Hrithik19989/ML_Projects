@@ -19,17 +19,19 @@ with col2:
 
 # 2. Add Trigger Button
 if st.button("Calculate Predicted Market Price", type="primary"):
-    # Construct payload matching your FastAPI Pydantic schema
+    # Construct payload MATCHING your FastAPI 'PredictionInput' schema fields exactly
     payload = {
+        "transaction_date": 2013.5,  # Added: Provide a fallback/average year if not in UI
+        "house_age": 15.0,           # Added: Provide a fallback/average age if not in UI
         "distance_to_mrt": distance_to_mrt,
-        "num_convenience_stores": num_stores,
+        "convenience_stores": num_stores, # Fixed key: matches backend model expectation
         "latitude": latitude,
         "longitude": longitude
     }
     
     # URL targeting your FastAPI backend (Toggle comment based on Local vs Production)
     # API_URL = "http://127.0.0"  # For Local testing
-    API_URL = "https://ml-projects-5zip.onrender.com/" # Replace with your live Render URL
+    API_URL = "https://onrender.com" # Replace with your live Render URL
     
     try:
         with st.spinner("Analyzing market configurations..."):
@@ -37,8 +39,10 @@ if st.button("Calculate Predicted Market Price", type="primary"):
             
         if response.status_code == 200:
             result = response.json()
-            price = result["predicted_price_per_unit"]
-            st.success(f"### 📈 Estimated Price: ${price:,.2f} per unit area")
+            # Fixed key: matches backend return statement {"prediction": ...}
+            price = result["prediction"] 
+            unit = result.get("unit", "per unit area")
+            st.success(f"### 📈 Estimated Price: ${price:,.2f} {unit}")
         else:
             st.error(f"API Error ({response.status_code}): {response.text}")
             
