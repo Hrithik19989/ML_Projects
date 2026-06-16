@@ -31,7 +31,7 @@ if st.button("Calculate Predicted Market Price", type="primary"):
     
     # URL targeting your FastAPI backend (Toggle comment based on Local vs Production)
     # API_URL = "http://127.0.0"  # For Local testing
-    API_URL = "https://onrender.com" # Replace with your live Render URL
+    API_URL = "https://ml-projects-5zip.onrender.com/" # Replace with your live Render URL
     
     try:
         with st.spinner("Analyzing market configurations..."):
