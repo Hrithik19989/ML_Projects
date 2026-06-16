@@ -3,6 +3,7 @@ import joblib
 import numpy as np
 from fastapi import FastAPI, HTTPException
 from app.schemas import PredictionInput
+import uvicorn
 
 app = FastAPI(
     title="House Price Prediction API",
@@ -55,3 +56,10 @@ def predict(payload: PredictionInput):
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
+    
+if __name__ == "__main__":
+    # Read Railway's dynamic PORT, default to 8000 for local testing
+    port = int(os.getenv("PORT", 8000))
+    # Bind to host 0.0.0.0 as required by Railway
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
+
