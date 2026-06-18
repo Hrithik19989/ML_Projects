@@ -1,0 +1,29 @@
+# Local virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python caching and compilation artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Testing frameworks cache and coverage reports
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# Git version control metadata
+.git/
+.gitignore
+.github/
+
+# Development or local configuration files
+.vscode/
+.idea/
+.DS_Store
+*.bak
