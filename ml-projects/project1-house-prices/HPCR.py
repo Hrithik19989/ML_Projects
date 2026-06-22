@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 
 # Load the dataset from a CSV file named "Real-estate1.csv" using pandas.
-df = pd.read_csv("Real-estate1.csv")
+df = pd.read_csv("Real-estate1_cleaned.csv")
 df = df.select_dtypes(include=[np.number]).dropna()# Select only numeric columns and drop rows with missing values to ensure the dataset is clean for modeling.
 print(df.head())# Display the first few rows of the dataset to understand its structure and contents
 print(df.describe())# Get summary statistics of the dataset
@@ -33,32 +33,53 @@ X_train = scaler.fit_transform(X_train)# Fit the scaler to the training data and
 X_test = scaler.transform(X_test)# Transform the testing data using the same scaler fitted on the training data, ensuring that the test features are standardized in the same way as the training features.
 
 models = {
-    "Linear Regression": LinearRegression(),# Define a dictionary of regression models to evaluate, including Linear Regression, Decision Tree, Random Forest, and Gradient Boosting.
-    "Decision Tree": DecisionTreeRegressor(),# Each model is instantiated and stored in the dictionary with a descriptive name as the key.
-    "Random Forest": RandomForestRegressor(),# The models will be trained and evaluated in a loop, where the RMSE for each model will be calculated and printed,
-    #along with a scatter plot of predicted vs actual prices.
-    "Gradient Boosting": GradientBoostingRegressor()# The best model will be determined based on the lowest RMSE value,
-    #which indicates better performance in predicting house prices.
+    "Linear Regression": LinearRegression(),
+    "Decision Tree": DecisionTreeRegressor(random_state=42),
+    "Random Forest": RandomForestRegressor(
+        n_estimators=100,
+        random_state=42
+    ),
+    "Gradient Boosting": GradientBoostingRegressor(
+        n_estimators=100,
+        learning_rate=0.1,
+        max_depth=3,
+        random_state=42
+    )
 }
 
+results = {}
+
 for name, model in models.items():
-    model.fit(X_train, y_train)# Fit each model to the training data, allowing it to learn the relationships between the features and the target variable (house prices).
-    preds = model.predict(X_test)# Use the trained model to make predictions on the test set, which will be compared to the actual house prices to evaluate the model's performance.
-    rmse = np.sqrt(mean_squared_error(y_test, preds))# Calculate the Root Mean Squared Error (RMSE) for the model's predictions, which is a common metric for evaluating regression models.
-    print(f"{name} → RMSE: {rmse:.2f}")
-    plt.figure(figsize=(10, 6))# Create a scatter plot to visualize the relationship between the actual house prices (y_test) and the predicted prices (preds) for each model.
-    plt.scatter(y_test, preds, alpha=0.5)# The scatter plot will show how well the predicted prices align with the actual prices, where points closer to the diagonal line (y = x) indicate better predictions.
-    plt.plot([y.min(), y.max()], [y.min(), y.max()], 'b--')# Add a dashed blue line representing the ideal scenario where predicted prices perfectly match actual prices (y = x).
-    plt.xlabel('Actual Prices')# Set the x-axis label to "Actual Prices" to indicate that the horizontal axis represents the true house prices from the test set.
-    plt.ylabel('Predicted Prices')# Set the y-axis label to "Predicted Prices" to indicate that the vertical axis represents the house prices predicted by the model.
-    plt.title(f'{name} Predictions vs Actual')# Set the title of the plot to indicate which model's predictions are being visualized, 
-    #allowing for a clear comparison of the predicted vs actual prices for each regression model.
-    plt.show()# Display the scatter plot for each model, allowing for a visual comparison of the predicted vs actual prices.
-    
-# Best model is determined based on the lowest RMSE value, which indicates better performance in predicting house prices.
-best_model = min(models, key=lambda name: np.sqrt(mean_squared_error(y_test, models[name].predict(X_test))))
-print(f"Best Model: {best_model}")
-    
+    model.fit(X_train, y_train)
+
+    predictions = model.predict(X_test)
+
+    rmse = np.sqrt(mean_squared_error(y_test, predictions))
+    results[name] = rmse
+
+    print(f"{name} RMSE: {rmse:.2f}")
+
+    plt.figure(figsize=(8,6))
+    plt.scatter(y_test, predictions, alpha=0.6)
+    plt.plot(
+        [y_test.min(), y_test.max()],
+        [y_test.min(), y_test.max()],
+        'r--',
+        linewidth=2
+    )
+    plt.xlabel("Actual House Price")
+    plt.ylabel("Predicted House Price")
+    plt.title(f"{name} - Actual vs Predicted")
+    plt.show()
+
+best_model = min(results, key=results.get)
+
+print("\nModel Comparison")
+for model, rmse in results.items():
+    print(f"{model}: {rmse:.2f}")
+
+print(f"\nBest Model: {best_model}")
+print(f"Lowest RMSE: {results[best_model]:.2f}")
 # The code reads a real estate dataset, preprocesses it, and evaluates multiple regression models to predict house prices. It calculates the RMSE for each model to compare their performance.
 # Note: Ensure that the dataset "Real-estate1.csv" is in the same directory as this script or provide the correct path to it.
 # Visual Representation of Predictions line is added to evaluate the performance of each model on the test set, and the RMSE is printed for comparison.
