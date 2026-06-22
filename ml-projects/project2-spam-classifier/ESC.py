@@ -8,8 +8,7 @@ from sklearn.metrics import  ConfusionMatrixDisplay , classification_report , co
 import matplotlib.pyplot as plt
 
 #Extracting and preprocessing the dataset
-df = pd.read_csv("spam.csv", encoding="latin-1")[["v1", "v2"]]# Load the dataset from a CSV file named "spam.csv" using pandas.
-#The encoding is set to "latin-1" to handle any special characters in the text data.
+df = pd.read_csv("cleaned_spam_dataset.csv")[["label", "text"]]
 df.columns = ["label", "text"]# Rename the columns of the DataFrame to "label" and "text" for better clarity and understanding of the dataset's structure.
 df["label"] = df["label"].map({"ham": 0, "spam": 1})# Convert the "label" column from categorical values ("ham" and "spam") to numerical values (0 for ham and 1 for spam) using the map function, which is necessary for training machine learning models.
 

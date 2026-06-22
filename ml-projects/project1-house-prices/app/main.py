@@ -39,7 +39,7 @@ def load_artifacts():
 # Trigger loading on app initialization
 load_artifacts()
 
-@app.get_route("/", methods=["GET", "HEAD"])
+@app.api_route("/", methods=["GET", "HEAD"])
 def read_root():
     return {
         "status": "online",

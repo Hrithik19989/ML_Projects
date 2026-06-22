@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns 
 
 
-df = pd.read_csv("churn.csv")# Load the customer churn dataset from a CSV file named "churn.csv" using pandas, which contains various features related to customer behavior 
+df = pd.read_csv("cleaned_churn.csv")# Load the customer churn dataset from a CSV file named "churn.csv" using pandas, which contains various features related to customer behavior 
 #and a target variable indicating whether the customer has churned or not.   
 df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")# Convert the "TotalCharges" column to numeric values, coercing any non-numeric entries to NaN,
 #which is necessary for proper analysis and modeling of this feature.

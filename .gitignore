@@ -1,0 +1,8 @@
+ml-projects/project4-credit-card-fraud/creditcard.csv
+ml-projects/project4-credit-card-fraud/cleaned_creditcard.csv
+.venv/
+**/_venv/
+**/.venv/
+.vscode/
+**/_vscode/
+**/.vscode/
